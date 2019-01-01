@@ -117,6 +117,7 @@ func getFrontTemplateTcp(servicesByPort map[int]Services) string {
     {{- end}}
     tcp-request inspect-delay 10s
     tcp-request content accept if WAIT_END
+
     {{- range $s := .}}
         {{- range $sd := .ServiceDest}}
             {{- if $sd.ServiceDomain}}
