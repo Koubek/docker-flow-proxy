@@ -111,10 +111,12 @@ func getFrontTemplateTcp(servicesByPort map[int]Services) string {
     {{- $timeoutClientSd := (index $sd 0).TimeoutClient -}}
     {{- if ne $timeoutClientSd "" }}
     timeout client {{$timeoutClientSd}}s
-    {{- end}}
+    {{- end}}    
     {{- if (index $sd 0).Clitcpka }}
     option clitcpka
     {{- end}}
+    tcp-request inspect-delay 10s
+    tcp-request content accept if WAIT_END
     {{- range $s := .}}
         {{- range $sd := .ServiceDest}}
             {{- if $sd.ServiceDomain}}
